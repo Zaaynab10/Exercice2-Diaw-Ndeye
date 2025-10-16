@@ -25,14 +25,7 @@ A simple backend Todo application built with Node.js, Express, and MongoDB.
    ```sh
    npm install
    ```
-
-3. Create a `.env` file and set your environment variables:
-   ```
-   MONGO_URI=mongodb://localhost:27017/todoDB
-   PORT=3000
-   ```
-
-4. Start the server:
+3. Start the server:
    ```sh
    npm run dev
    ```
@@ -49,7 +42,6 @@ A simple backend Todo application built with Node.js, Express, and MongoDB.
 backend-js/
   ├── .env
   ├── .gitignore
-  ├── db.js
   ├── package.json
   ├── README.md
   ├── server.js
@@ -65,7 +57,5 @@ backend-js/
 ## Author
 
 - Seynabou
-
----
 
 > This project is for educational purposes.
