@@ -78,6 +78,4 @@ TodoApp-PostgreSQL/
 
 - Seynabou
 
----
-
 > This project is for educational purposes.
