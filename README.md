@@ -1,4 +1,4 @@
-# TodoApp-PostgreSQL
+# Exercice2-Diaw-Ndeye
 
 A simple backend Todo application built with Node.js, Express, and PostgreSQL.
 
@@ -6,6 +6,7 @@ A simple backend Todo application built with Node.js, Express, and PostgreSQL.
 
 - Add a task
 - List all tasks
+- Mark a task as completed
 - Delete a task
 
 ## Prerequisites
@@ -19,7 +20,7 @@ A simple backend Todo application built with Node.js, Express, and PostgreSQL.
 
    ```sh
    git clone <repo-url>
-   cd TodoApp-PostgreSQL
+   cd Exercice2-Diaw-Ndeye
    ```
 
 2. Install dependencies:
@@ -29,24 +30,14 @@ A simple backend Todo application built with Node.js, Express, and PostgreSQL.
    ```
 
 3. Create a `.env` file and set your environment variables:
-
    ```
    DATABASE_URL=postgresql://postgres:password@localhost:5432/todoApp
    PORT=3000
    ```
 
 4. Create PostgreSQL database and table:
+   Run the SQL script in `createDB.sql` to create the database, table, and insert sample data.
 
-   ```sql
-   CREATE DATABASE todoApp;
-
-   CREATE TABLE tasks (
-       id SERIAL PRIMARY KEY,
-       title VARCHAR(255) NOT NULL,
-       status BOOLEAN DEFAULT FALSE,
-       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   );
-   ```
 
 5. Start the server:
    ```sh
@@ -55,17 +46,19 @@ A simple backend Todo application built with Node.js, Express, and PostgreSQL.
 
 ## API Endpoints
 
-- `GET /tasks` : List all tasks
-- `POST /tasks` : Add a new task (`{ "title": "My task" }`)
-- `DELETE /tasks/:id` : Delete a task by its ID
+- `GET /todos` : List all tasks
+- `POST /todos` : Add a new task (body: `{ "title": "My task" }`)
+- `PUT /todos/:id` : Mark a task as completed (body: `{ "status": true }`)
+- `DELETE /todos/:id` : Delete a task by its ID
 
 ## Project Structure
 
 ```
-TodoApp-PostgreSQL/
+Exercice2-Diaw-Ndeye/
   ├── .env
   ├── .gitignore
-  ├── db.js          # PostgreSQL connection
+  ├── createDB.sql    # SQL script for database setup
+  ├── db.js           # PostgreSQL connection
   ├── package.json
   ├── README.md
   ├── server.js
@@ -80,6 +73,5 @@ TodoApp-PostgreSQL/
 
 ## Author
 
-- Seynabou
+-Seynabou 
 
-> This project is for educational purposes.
