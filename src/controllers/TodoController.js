@@ -33,13 +33,13 @@ export default class TodoController {
 
   completed = async (req, res) => {
     try {
-      const { status } = req.body;
+      const { done } = req.body;
       const { id } = req.params;
-      if (id === undefined || status === undefined) {
+      if (id === undefined || done === undefined) {
         return res.status(400).json({ error: "L'id et le status sont requis" });
       }
 
-      const task = await this.todoModel.completed(status, id);
+      const task = await this.todoModel.completed(done, id);
 
       if (!task) {
         return res.status(404).json({ error: "Tâche non trouvée" });
