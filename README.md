@@ -26,13 +26,7 @@ A simple backend Todo application built with Node.js, Express, and PostgreSQL.
    npm install
    ```
 
-3. Create a `.env` file and set your environment variables:
-   ```
-   DATABASE_URL=postgresql://postgres:password@localhost:5432/todoApp
-   PORT=3000
-   ```
-
-4. Create PostgreSQL database and table:
+3. Create PostgreSQL database and table:
    ```sql
    CREATE DATABASE todoApp;
    
