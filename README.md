@@ -1,24 +1,24 @@
-# Exercice2-Diaw-Ndeye
+# TodoApp-PostgreSQL
 
-A simple backend Todo application built with Node.js, Express, and MongoDB.
+A simple backend Todo application built with Node.js, Express, and PostgreSQL.
 
 ## Features
 
 - Add a task
-- List all tasks
+- List all tasks 
 - Delete a task
 
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/)
-- [MongoDB](https://www.mongodb.com/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ## Installation
 
 1. Clone the repository:
    ```sh
    git clone <repo-url>
-   cd backend-js
+   cd TodoApp-PostgreSQL
    ```
 
 2. Install dependencies:
@@ -28,28 +28,40 @@ A simple backend Todo application built with Node.js, Express, and MongoDB.
 
 3. Create a `.env` file and set your environment variables:
    ```
-   MONGO_URI=mongodb://localhost:27017/todoDB
+   DATABASE_URL=postgresql://postgres:password@localhost:5432/todoApp
    PORT=3000
    ```
 
-4. Start the server:
+4. Create PostgreSQL database and table:
+   ```sql
+   CREATE DATABASE todoApp;
+   
+   CREATE TABLE tasks (
+       id SERIAL PRIMARY KEY,
+       title VARCHAR(255) NOT NULL,
+       status BOOLEAN DEFAULT FALSE,
+       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   );
+   ```
+
+5. Start the server:
    ```sh
    npm run dev
    ```
 
 ## API Endpoints
 
-- `GET /todos` : List all tasks
-- `POST /todos` : Add a new task (`{ "title": "My task" }`)
-- `DELETE /todos/:id` : Delete a task by its ID
+- `GET /tasks` : List all tasks
+- `POST /tasks` : Add a new task (`{ "title": "My task" }`)
+- `DELETE /tasks/:id` : Delete a task by its ID
 
 ## Project Structure
 
 ```
-backend-js/
+TodoApp-PostgreSQL/
   ├── .env
   ├── .gitignore
-  ├── db.js
+  ├── db.js          # PostgreSQL connection
   ├── package.json
   ├── README.md
   ├── server.js
