@@ -1,84 +1,115 @@
-# Exercice2-Diaw-Ndeye
+# API Backend Todo
 
-A simple Todo application built with Node.js, Express, and MongoDB, including a frontend interface.
+Une API RESTful simple pour gérer les tâches todo, construite avec Node.js, Express, et supportant à la fois MongoDB (NoSQL) et les bases de données SQL (PostgreSQL/MySQL).
 
-## Features
+## Fonctionnalités
 
-- Add a task
-- List all tasks
-- Mark a task as completed
-- Delete a task
-- Web interface for managing todos
-
-## Prerequisites
-
-- [Node.js](https://nodejs.org/)
-- [MongoDB](https://www.mongodb.com/)
+- Créer, lire, mettre à jour et supprimer des tâches todo
+- Marquer les tâches comme terminées ou non terminées
+- Endpoints API RESTful
+- Intégration MongoDB pour la persistance des données
+- CORS activé pour les requêtes cross-origin
+- Service de fichiers statiques pour le frontend
+- Support pour bases de données SQL (PostgreSQL/MySQL) en plus de MongoDB
 
 ## Installation
 
-1. Clone the repository:
+1. Cloner le dépôt :
 
-   ```sh
-   git clone <repo-url>
-   cd Exercice2-Diaw-Ndeye
+   ```
+   git clone <url-du-dépôt>
+   cd backend
    ```
 
-2. Install dependencies:
+2. Installer les dépendances :
 
-   ```sh
+   ```
    npm install
    ```
 
-3. Create a `.env` file and set your environment variables:
+3. Configurer les variables d'environnement :
+   Créer un fichier `.env` dans le répertoire racine.
+
+   Pour MongoDB (NoSQL) :
+
    ```
-   DATABASE_URL=mongodb://localhost:27017/todoApp
+   MONGO_URL=mongodb://localhost:27017/todoapp
+   DB_TYPE=NOSQL
    PORT=3000
    ```
 
-4. Create MongoDB database and insert sample data:
-   Run the script in `createDB.js` using mongosh or node to create the database and insert sample data.
+   Pour SQL (PostgreSQL ou MySQL) :
 
-5. Start the server:
-   ```sh
-   npm run dev
+   ```
+   DATABASE_URL=postgresql://username:password@localhost:5432/todoapp  # Pour PostgreSQL
+   DB_TYPE=SQL
+   PORT=3000
    ```
 
-## API Endpoints
+4. Assurer que la base de données choisie fonctionne sur votre système (MongoDB pour NoSQL, PostgreSQL pour SQL).
 
-- `GET /todos` : List all tasks
-- `POST /todos` : Add a new task (body: `{ "title": "My task" }`)
-- `PUT /todos/:id` : Mark a task as completed (body: `{ "done": true }`)
-- `DELETE /todos/:id` : Delete a task by its ID
+## Utilisation
 
-## Frontend
-
-The application includes a simple web interface accessible at `http://localhost:3000` after starting the server. The frontend files are located in `src/view/`.
-
-## Project Structure
+Démarrer le serveur :
 
 ```
-Exercice2-Diaw-Ndeye/
-  ├── .env
-  ├── .gitignore
-  ├── createDB.js     # MongoDB script for database setup
-  ├── db.js           # MongoDB connection
-  ├── package.json
-  ├── README.md
-  ├── server.js
-  └── src/
-      ├── controllers/
-      │   └── TodoController.js
-      ├── models/
-      │   └── TodoModel.js
-      ├── routes/
-      │   └── TodoRoutes.js
-      └── view/
-          ├── app.js
-          └── index.html
+npm start
 ```
+
+Pour le développement avec rechargement automatique :
+
+```
+npm run dev
+```
+
+Le serveur tournera sur `http://localhost:3000`.
+
+## Endpoints API
+
+### Obtenir toutes les todos
+
+- **GET** `/todos`
+- Réponse : Tableau d'objets todo
+
+### Créer une nouvelle todo
+
+- **POST** `/todos`
+- Corps : `{ "title": "Titre de la tâche" }`
+- Réponse : Objet todo créé
+
+### Mettre à jour le statut de complétion d'une todo
+
+- **PUT** `/todos/:id`
+- Corps : `{ "done": true }`
+- Réponse : Objet todo mis à jour
+
+### Supprimer une todo
+
+- **DELETE** `/todos/:id`
+- Réponse : Message de confirmation
+
+## Structure du Projet
+
+```
+backend/
+├── src/
+│   ├── controllers/
+│   │   └── TodoController.js      # Contrôleur pour la logique métier
+│   ├── models/
+│   │   └── TodoModel.js           # Modèle pour l'interaction avec la base de données
+│   ├── routes/
+│   │   └── TodoRoutes.js          # Routes API
+│   └── view/
+│       ├── app.js                 # Script frontend
+│       └── index.html             # Page HTML frontend
+├── db.js                          # Configuration de connexion à la base de données
+├── server.js                      # Point d'entrée du serveur
+├── package.json                   # Dépendances et scripts
+├── README.md                      # Ce fichier
+└── .env                           # Variables d'environnement
+```
+
 
 ## Author
 
-- Seynabou 
-
+Seynabou
