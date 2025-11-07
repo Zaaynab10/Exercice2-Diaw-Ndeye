@@ -1,6 +1,6 @@
-import TodoModel from "../models/TodoModel.js";
+const TodoModel = require( "../models/TodoModel.js");
 
-export default class TodoController {
+class TodoController {
   constructor() {
     this.todoModel = new TodoModel();
   }
@@ -75,3 +75,5 @@ delete = async (req, res) => {
 
 
 }
+
+module.exports=TodoController
