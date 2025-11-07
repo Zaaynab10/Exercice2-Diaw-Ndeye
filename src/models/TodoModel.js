@@ -1,64 +1,64 @@
-import mongoose from "mongoose";
-const taskSchema = new mongoose.Schema(
-  {
-    title: { type: String, required: true },
-    done: { type: Boolean, default: false },
-  },
-  { timestamps: true }
-);
+const dotenv = require("dotenv");
+const { pool } = require("../../db.js"); // Import SQL connection
+const mongoose = require("mongoose");    // Import mongoose
 
-const Task = mongoose.model("Task", taskSchema);
-export default class TodoModel {
+dotenv.config();
+
+class TodoModel {
   constructor() {
-    this.tasks = [];
+    this.dbType = process.env.DB_TYPE;
+    
+    if (this.dbType === "SQL") {
+      this.db = pool;
+    } 
+    else if (this.dbType === "NOSQL") {
+      const taskSchema = new mongoose.Schema({
+        title: String,
+        done: { type: Boolean, default: false }
+      });
+      this.Task = mongoose.model('Task', taskSchema);
+    }
   }
 
   async getAll() {
-    try {
-      const result = await Task.find();
-      this.tasks = result;
-      return this.tasks;
-    } catch (error) {
-      console.error("Erreur TodoModel.getAll:", error);
-      throw error;
+    if (this.dbType === "SQL") {
+      const [rows] = await this.db.query("SELECT * FROM tasks");
+      return rows;
+    } else {
+      return await this.Task.find();
     }
   }
 
   async create(title) {
-    try {
-      const result = await Task.create({title});
-      this.tasks=result;
-      return this.tasks
-    } catch (error) {
-      console.error("Erreur TodoModel.create:", error);
-      throw error;
+    if (this.dbType === "SQL") {
+      const [result] = await this.db.query(
+        "INSERT INTO tasks (title, done) VALUES (?, ?)",
+        [title, false]
+      );
+      return { id: result.insertId, title, done: false };
+    } else {
+      return await this.Task.create({ title });
     }
   }
 
   async completed(status, id) {
-  try {
-    const updatedTask = await Task.findByIdAndUpdate(
-      id,                       
-      { done: status },       
-      { new: true }             
-    );
-
-    return updatedTask;        
-  } catch (error) {
-    console.error("Erreur TodoModel.completed:", error);
-    throw error;
+    if (this.dbType === "SQL") {
+      await this.db.query("UPDATE tasks SET done = ? WHERE id = ?", [status, id]);
+      const [rows] = await this.db.query("SELECT * FROM tasks WHERE id = ?", [id]);
+      return rows[0];
+    } else {
+      return await this.Task.findByIdAndUpdate(id, { done: status }, { new: true });
+    }
   }
-}
 
   async delete(id) {
-    try {
-     
-      const result = await Task.findByIdAndDelete(id)
-      this.tasks=result;
-      return this.tasks;
-    } catch (error) {
-      console.error("Erreur TodoModel.delete:", error);
-      throw error;
+    if (this.dbType === "SQL") {
+      await this.db.query("DELETE FROM tasks WHERE id = ?", [id]);
+      return { message: "Tâche supprimée" };
+    } else {
+      return await this.Task.findByIdAndDelete(id);
     }
   }
 }
+
+module.exports = TodoModel;
